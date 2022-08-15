@@ -1,0 +1,20 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Todolist RESTful API",
+    "description": "Documentation Todolist RESTful API and learning OpenAPI",
+    "termsOfService": "http.//www.srz.dev.com/terms-of-service",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Shahrizan",
+      "email": "shahrizan.learner@gmail.com",
+      "url": "https://www.srz.dev.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [],
+  "paths": {}
+}
