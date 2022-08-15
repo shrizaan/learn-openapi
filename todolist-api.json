@@ -8,13 +8,33 @@
     "contact": {
       "name": "Shahrizan",
       "email": "shahrizan.learner@gmail.com",
-      "url": "https://www.srz.dev.com"
+      "url": "https://www.srz-dev.com"
     },
     "license": {
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "servers": [],
+  "externalDocs": {
+    "description": "Find more info here",
+    "url": "https://www.srz-dev.com/my-api-info"
+  },
+  "servers": [
+    {
+      "url": "https://{environment}.srz-dev.com/api/v1",
+      "description": "Todolist RESTful API Server",
+      "variables": {
+        "environment": {
+          "default": "dev",
+          "enum": [
+            "dev",
+            "qa",
+            "prod"
+          ],
+          "description": "The target server environment"
+        }
+      }
+    }
+  ],
   "paths": {}
 }
