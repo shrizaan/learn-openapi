@@ -1,1 +1,8 @@
 .idea/
+gen/
+javascript-client-generated/
+nodejs-server-server-generated/
+javascript-client-generated.zip
+nodejs-server-server-generated.zip
+temp.json
+reference-openapi.json
