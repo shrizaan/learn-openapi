@@ -26,19 +26,24 @@
       "variables": {
         "environment": {
           "default": "dev",
-          "enum": [
-            "dev",
-            "qa",
-            "prod"
-          ],
+          "enum": ["dev", "qa", "prod"],
           "description": "The target server environment"
         }
       }
     }
   ],
+  "tags": [
+    {
+      "name": "todolist",
+      "description": "Operations about todolist"
+    }
+  ],
   "paths": {
     "/todolist": {
       "get": {
+        "tags": [
+          "todolist"
+        ],
         "summary": "Get all todolist",
         "description": "Only will return active todolist, complete todolist or delted todolist",
         "parameters": [
@@ -63,13 +68,60 @@
               "nullable": false,
               "minLength": 1,
               "maxLength": 255
+            },
+            "examples": {
+              "java": {
+                "description": "Example nama Java",
+                "value": "Java"
+              },
+              "php": {
+                "description": "Example nama PHP",
+                "value": "PHP"
+              }
             }
           }
         ],
-        "requestBody": {},
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Success get all todolist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/arrayTodoList"
+                },
+                "examples": {
+                  "Success": {
+                    "description": "Example data todolist Java",
+                    "value": [
+                      {
+                        "id": 1,
+                        "name": "Java",
+                        "priority": 1,
+                        "tags": ["java", "oop"]
+                      },
+                      {
+                        "id": 2,
+                        "name": "PHP",
+                        "priority": 2,
+                        "tags": ["php", "oop"]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "TodolistAuth": []
+          }
+        ]
       },
       "post": {
+        "tags": [
+          "todolist"
+        ],
         "summary": "Create new todolist",
         "description": "Create new todolist",
         "requestBody": {
@@ -77,60 +129,284 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "required": true,
-                    "minLength": 1
-                  },
-                  "priority": {
-                    "type": "integer",
-                    "required": true,
-                    "minimum": 1
+                "$ref": "#/components/schemas/createOrUpdateTodolist"
+              },
+              "examples": {
+                "java": {
+                  "description": "Example nama Java",
+                  "value": {
+                    "name": "Java",
+                    "priority": 1,
+                    "tags": ["java", "oop"]
+                  }
+                },
+                "php": {
+                  "description": "Example nama PHP",
+                  "value": {
+                    "name": "PHP",
+                    "priority": 2,
+                    "tags": ["php", "oop"]
                   }
                 }
               }
             }
-          } 
+          }
         },
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Success create new todolist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/todolist"
+                },
+                "examples": {
+                  "Java": {
+                    "description": "Example data todolist Java",
+                    "value": {
+                      "id": 1,
+                      "name": "Java",
+                      "priority": 1,
+                      "tags": ["java", "oop"]
+                    }
+                  },
+                  "PHP": {
+                    "description": "Example data todolist PHP",
+                    "value": {
+                      "id": 2,
+                      "name": "PHP",
+                      "priority": 2,
+                      "tags": ["PHP", "oop"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "TodolistAuth": []
+          }
+        ]
       }
     },
     "/todolist/{todolistId}": {
       "put": {
+        "tags": [
+          "todolist"
+        ],
         "summary": "Update existing todolist",
         "description": "Update existing todolist in database",
         "parameters": [
           {
-            "name": "todolistId",
-            "description": "The id of todolist to update",
-            "required": true,
-            "in": "path"
+            "$ref": "#/components/parameters/todolistId"
           }
         ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/createOrUpdateTodolist"
+              }
             }
           }
         },
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Success update existing todolist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/todolist"
+                },
+                "examples": {
+                  "Java": {
+                    "description": "Example data todolist Java",
+                    "value": {
+                      "id": 1,
+                      "name": "Java",
+                      "priority": 1,
+                      "tags": ["java", "oop"]
+                    }
+                  },
+                  "PHP": {
+                    "description": "Example data todolist PHP",
+                    "value": {
+                      "id": 2,
+                      "name": "PHP",
+                      "priority": 2,
+                      "tags": ["PHP", "oop"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "TodolistAuth": []
+          }
+        ]
       },
       "delete": {
+        "tags": [
+          "todolist"
+        ],
         "summary": "Delete existing todolist",
         "description": "Delete existing todolist in database",
         "parameters": [
           {
-            "name": "todolistId",
-            "description": "The id of todolist to delete",
-            "required": true,
-            "in": "path"
+            "$ref": "#/components/parameters/todolistId"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Success delete existing todolist",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "examples": {
+                  "Success": {
+                    "description": "Success delete existing todolist",
+                    "value": {
+                      "success": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Todolist not found",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "examples": {
+                  "Success": {
+                    "description": "Todolist not found",
+                    "value": {
+                      "success": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "TodolistAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "todolistId": {
+        "name": "todolistId",
+        "description": "The id of todolist to update",
+        "required": true,
+        "in": "path",
+        "schema": {
+          "type": "integer",
+          "minLength": 1
+        },
+        "examples": {
+          "Java": {
+            "description": "Example id Java",
+            "value": 1
+          },
+          "PHP": {
+            "description": "Example id PHP",
+            "value": 2
+          }
+        }
+      }
+    },
+    "schemas": {
+      "todolist": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "required": true
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32",
+            "required": true,
+            "default": 1
+          },
+          "tags": {
+            "type": "array",
+            "required": false,
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "createOrUpdateTodolist": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "required": true
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32",
+            "required": true,
+            "default": 1
+          },
+          "tags": {
+            "type": "array",
+            "required": false,
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "arrayTodoList": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/todolist"
+        }
+      }
+    },
+    "securitySchemes": {
+      "TodolistAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-KEY"
       }
     }
   }
